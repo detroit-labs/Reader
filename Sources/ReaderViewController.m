@@ -44,6 +44,7 @@
 @synthesize delegate;
 @synthesize shouldDisplayToolbarsAutomatically = _shouldDisplayToolbarsAutomatically;
 @synthesize shouldDisplayToolbarsOnTap = _shouldDisplayToolbarsOnTap;
+@synthesize backgroundColor = _backgroundColor;
 
 #pragma mark Support methods
 
@@ -326,7 +327,11 @@
 
 	assert(self.splitViewController == nil); // Not supported (sorry)
 
-	self.view.backgroundColor = [UIColor scrollViewTexturedBackgroundColor];
+	if ([self backgroundColor] == nil) {
+		self.view.backgroundColor = [UIColor scrollViewTexturedBackgroundColor];
+	} else {
+		self.view.backgroundColor = [self backgroundColor];
+	}
 
 	CGRect viewRect = self.view.bounds; // View controller's view bounds
 

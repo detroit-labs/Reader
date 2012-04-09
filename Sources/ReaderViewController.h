@@ -74,6 +74,7 @@
 
 @property BOOL shouldDisplayToolbarsAutomatically;
 @property BOOL shouldDisplayToolbarsOnTap;
+@property (nonatomic, strong, readwrite) UIColor *backgroundColor;
 
 - (id)initWithReaderDocument:(ReaderDocument *)object;
 
