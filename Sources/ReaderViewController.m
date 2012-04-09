@@ -42,6 +42,8 @@
 #pragma mark Properties
 
 @synthesize delegate;
+@synthesize shouldDisplayToolbarsAutomatically = _shouldDisplayToolbarsAutomatically;
+@synthesize shouldDisplayToolbarsOnTap = _shouldDisplayToolbarsOnTap;
 
 #pragma mark Support methods
 
@@ -292,6 +294,9 @@
 			[ReaderThumbCache touchThumbCacheWithGUID:object.guid]; // Touch the document thumb cache directory
 
 			reader = self; // Return an initialized ReaderViewController object
+			
+			_shouldDisplayToolbarsAutomatically = YES;
+			_shouldDisplayToolbarsOnTap = YES;
 		}
 	}
 
@@ -359,6 +364,11 @@
 	mainPagebar.delegate = self;
 
 	[self.view addSubview:mainPagebar];
+	
+	if ([self shouldDisplayToolbarsAutomatically] == NO) {
+		[mainPagebar hidePagebar];
+		[mainToolbar hideToolbar];
+	}
 
 	UITapGestureRecognizer *singleTapOne = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
 	singleTapOne.numberOfTouchesRequired = 1; singleTapOne.numberOfTapsRequired = 1; singleTapOne.delegate = self;
@@ -678,9 +688,13 @@
 			{
 				if ([lastHideTime timeIntervalSinceNow] < -0.75) // Delay since hide
 				{
-					if ((mainToolbar.hidden == YES) || (mainPagebar.hidden == YES))
-					{
-						[mainToolbar showToolbar]; [mainPagebar showPagebar]; // Show
+					if ([self shouldDisplayToolbarsOnTap] == YES) {
+						
+						if ((mainToolbar.hidden == YES) || (mainPagebar.hidden == YES))
+						{
+							[mainToolbar showToolbar]; [mainPagebar showPagebar]; // Show
+						}
+						
 					}
 				}
 			}

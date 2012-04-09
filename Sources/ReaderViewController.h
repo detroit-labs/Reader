@@ -72,6 +72,9 @@
 
 @property (nonatomic, assign, readwrite) id <ReaderViewControllerDelegate> delegate;
 
+@property BOOL shouldDisplayToolbarsAutomatically;
+@property BOOL shouldDisplayToolbarsOnTap;
+
 - (id)initWithReaderDocument:(ReaderDocument *)object;
 
 @end
